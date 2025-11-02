@@ -3,37 +3,58 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-// 🔹 Conexión a la base de datos
-export const sequelize = new Sequelize(process.env.DATABASE_URL as string, {
+// Detectar entorno
+const NODE_ENV = process.env.NODE_ENV || 'development';
+
+// Seleccionar la URL según el entorno
+let DB_URL: string | undefined;
+
+if (NODE_ENV === 'production') {
+  DB_URL = process.env.DATABASE_URL;        // Neon o AWS en Vercel
+} else if (NODE_ENV === 'aws') {
+  DB_URL = process.env.DATABASE_URL_AWS;    // AWS RDS
+} else {
+  DB_URL = process.env.DATABASE_URL_LOCAL;  // Local
+}
+
+if (!DB_URL) throw new Error('No se encontró la URL de base de datos apropiada.');
+
+// Conexión a la base de datos
+export const sequelize = new Sequelize(DB_URL, {
   dialect: 'postgres',
-  logging: false,
+  logging: NODE_ENV === 'development', // activa logs solo en local
+  dialectOptions: {
+    ssl: NODE_ENV !== 'development'
+      ? { require: true, rejectUnauthorized: false }
+      : undefined,
+  },
 });
 
-// 🔹 Importar modelos
+// Importar modelos
 import { Usuario } from './usuario';
 import { Producto } from './producto';
 import { Variante } from './variante';
 
 export { Usuario, Producto, Variante };
 
-// 🔹 Definir relaciones
+// Relaciones
 Usuario.hasMany(Producto, { foreignKey: 'usuarioId', as: 'productos' });
 Producto.belongsTo(Usuario, { foreignKey: 'usuarioId', as: 'usuario' });
 
 Producto.hasMany(Variante, { foreignKey: 'productoId', as: 'variantes' });
 Variante.belongsTo(Producto, { foreignKey: 'productoId', as: 'producto' });
 
-// 🔹 Conectar y sincronizar
+// Conectar y sincronizar
 export const connectDB = async () => {
   try {
     await sequelize.authenticate();
-    console.log('✅ Conexión a la base de datos establecida.');
+    console.log('Conexión establecida con la base de datos.');
 
-    // Sincronizamos todos los modelos (crea/actualiza tablas)
-    await sequelize.sync({ alter: true });
-    console.log('✅ Modelos sincronizados.');
+    if (NODE_ENV === 'development') {
+      await sequelize.sync({ alter: true });
+      console.log('Tablas sincronizadas en desarrollo.');
+    }
 
-    // 🔹 Crear usuario externo (id = 1) si no existe
     const [user, created] = await Usuario.findOrCreate({
       where: { id: 1 },
       defaults: {
@@ -43,8 +64,8 @@ export const connectDB = async () => {
       },
     });
 
-    if (created) console.log('✅ Usuario externo creado');
+    if (created) console.log('Usuario externo creado.');
   } catch (error) {
-    console.error('❌ Error al conectar la base de datos:', error);
+    console.error('Error al conectar la base de datos:', error);
   }
 };

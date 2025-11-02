@@ -4,7 +4,8 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { Usuario } from '../models/usuario';
 
-const AUTH_TOKEN = process.env.AUTH_TOKEN || 'mentagranizada'; 
+// Configuración
+const AUTH_TOKEN = process.env.AUTH_TOKEN; 
 
 // Registrar nuevo usuario
 export const register = async (req: Request, res: Response) => {

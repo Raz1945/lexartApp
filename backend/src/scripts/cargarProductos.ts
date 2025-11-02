@@ -3,17 +3,14 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-// CONFIGURACIÓN 
-//info Para ejecutar este script como usuario logueado se debera previamente obtener un token JWT
-const AUTH_TOKEN = process.env.AUTH_TOKEN || 'REMPLAZAR_POR_TOKEN_JWT_OBTENIDO';
+// Configuración
+const AUTH_TOKEN = process.env.AUTH_TOKEN;
+const BASE_URL = process.env.API_URL;
+const API_KEY = process.env.API_KEY;
 
-const BASE_URL = process.env.API_URL || 'http://localhost:3000';
-const API_KEY = process.env.API_KEY || 'elmateconbaldo';
-
-// VARIABLES DE ESTADO 
 let modoExterno = false; // false = usuario logueado, true = API externa
 
-// FUNCIÓN DE HEADERS 
+// Obtener headers según modo 
 function getHeaders() {
   return modoExterno
     ? { 'x-api-key': API_KEY }
@@ -115,13 +112,13 @@ async function cargarProductos() {
   ];
 
   for (const grupo of estructuras) {
-    console.log(`\n📦 Cargando ${grupo.nombre}...`);
+    console.log(`\n Cargando ${grupo.nombre}...`);
     for (const producto of grupo.data) {
       await crearProducto(producto, grupo.nombre);
     }
   }
 
-  console.log('\n🎉 Finalizado el proceso de carga.');
+  console.log('\n Finalizado el proceso de carga.');
 }
 
 // EJECUTAR 

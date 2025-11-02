@@ -5,7 +5,8 @@ import { getTokenFromHeader } from './getTokenFromHeader';
 
 dotenv.config();
 
-const AUTH_TOKEN = process.env.AUTH_TOKEN || 'mentagranizada';
+// Configuración
+const AUTH_TOKEN = process.env.AUTH_TOKEN;
 
 // Extendemos el Request de Express para incluir el usuario autenticado
 export interface AuthRequest extends Request {
