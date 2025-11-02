@@ -8,6 +8,7 @@ import ProductEdit from "../pages/ProductEdit";
 import ExternalApis from "../pages/ExternalApis";
 import {ProtectedRoute} from "./ProtectedRoute";
 
+// Definición de rutas de la aplicación
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -16,7 +17,7 @@ export const router = createBrowserRouter([
       { index: true, element: <ProtectedRoute><ProductsList /></ProtectedRoute> },
       { path: "create", element: <ProtectedRoute><ProductCreate /></ProtectedRoute> },
       { path: "edit/:id", element: <ProtectedRoute><ProductEdit /></ProtectedRoute> },
-      
+
       // pública para probar “cliente externo” (x-api-key)
       { path: "external", element: <ExternalApis /> },
     ],
