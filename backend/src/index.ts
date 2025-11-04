@@ -1,3 +1,4 @@
+require('module-alias/register'); // Debe ser la primera línea para que los alias funcionen
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
