@@ -1,4 +1,2 @@
 ## lexartApp
 
-# TODO
-
