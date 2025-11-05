@@ -1,5 +1,5 @@
 import { DataTypes, Model, Optional } from 'sequelize';
-import { sequelize } from "@db/connection";  
+import { sequelize } from "../db/connection";  
 
 interface VarianteAttributes {
   id: number;

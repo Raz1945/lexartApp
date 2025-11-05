@@ -1,9 +1,8 @@
-require('module-alias/register'); // Debe ser la primera línea para que los alias funcionen
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import routes from '@routes/index';
-import { connectDB } from '@db/connection';
+import routes from './routes/index';
+import { connectDB } from './db/connection';
 
 dotenv.config(); // Cargar las variables de entorno antes de inicializar la app
 

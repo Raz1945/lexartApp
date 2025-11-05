@@ -1,7 +1,7 @@
 import express from 'express';
-import { crearProducto, obtenerProductos } from '@controllers/productController';
-import { authCombined } from '@middlewares/authCombined';
-import { authenticateToken } from '@middlewares/authJwt';
+import { crearProducto, obtenerProductos } from '../controllers/productController';
+import { authCombined } from '../middlewares/authCombined';
+import { authenticateToken } from '../middlewares/authJwt';
 
 const router = express.Router();
 

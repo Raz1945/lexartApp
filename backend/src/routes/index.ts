@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 import authRoutes from './authRoutes';
 import productsRoutes from './productsRoutes';
-import { sequelize } from '@db/connection';
+import { sequelize } from '../db/connection';
 
 const router = express.Router();
 
