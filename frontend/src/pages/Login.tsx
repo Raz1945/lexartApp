@@ -13,14 +13,16 @@ export default function Login() {
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     setErr("");
+
     try {
       const res = await login(email, password);
-      setToken(res.token);
+      setToken(res.token, res.usuario); // 👈 ahora guarda también el usuario
       navigate("/");
     } catch (e: any) {
       setErr(e?.response?.data?.mensaje || "Error al iniciar sesión");
     }
   }
+
 
   return (
     <div className="max-w-sm mx-auto bg-white p-6 rounded-xl shadow">

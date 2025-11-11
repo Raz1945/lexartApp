@@ -86,7 +86,7 @@ export const crearProducto = async (req: AuthRequest, res: Response) => {
   }
 };
 
-// Obtener todos los productos (para usuarios logueados o externos)
+// Obtener todos los productos (para usuarios logueados )
 export const obtenerProductos = async (_req: Request, res: Response) => {
   try {
     const productos = await Producto.findAll({

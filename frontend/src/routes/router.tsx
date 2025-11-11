@@ -5,10 +5,13 @@ import Register from "../pages/Register";
 import ProductsList from "../pages/ProductsList";
 import ProductCreate from "../pages/ProductCreate";
 import ProductEdit from "../pages/ProductEdit";
-import ExternalApis from "../pages/ExternalApis";
-import {ProtectedRoute} from "./ProtectedRoute";
+import { ProtectedRoute } from "./ProtectedRoute";
 
-// Definición de rutas de la aplicación
+// NUEVAS PÁGINAS
+// import MisProductos from "../pages/MisProductos";
+// import Perfil from "../pages/Perfil";
+import NotFound from "../pages/NotFound";
+
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -17,12 +20,11 @@ export const router = createBrowserRouter([
       { index: true, element: <ProtectedRoute><ProductsList /></ProtectedRoute> },
       { path: "create", element: <ProtectedRoute><ProductCreate /></ProtectedRoute> },
       { path: "edit/:id", element: <ProtectedRoute><ProductEdit /></ProtectedRoute> },
-
-      // pública para probar “cliente externo” (x-api-key)
-      { path: "external", element: <ExternalApis /> },
+      // { path: "mis-productos", element: <ProtectedRoute><MisProductos /></ProtectedRoute> },
+      // { path: "perfil", element: <ProtectedRoute><Perfil /></ProtectedRoute> },
+      { path: "*", element: <NotFound /> },
     ],
   },
   { path: "/login", element: <Login /> },
   { path: "/register", element: <Register /> },
 ]);
-export default router;

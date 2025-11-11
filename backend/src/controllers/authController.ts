@@ -116,3 +116,12 @@ export const login = async (req: Request, res: Response) => {
     return res.status(500).json({ error: "Error al iniciar sesión" });
   }
 };
+
+// ====================================================
+// Logout de usuario
+// ==================================================== 
+export const logout = async (_req: Request, res: Response) => {
+  // En JWT, el logout se maneja en el cliente eliminando el token.
+  // Aquí solo devolvemos un mensaje de éxito.
+  return res.json({ mensaje: "Logout exitoso" });
+};
