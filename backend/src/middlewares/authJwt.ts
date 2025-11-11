@@ -71,7 +71,7 @@ export const authenticateToken = (
 
     // Manejo de errores específicos de JWT
     if (err.name === "TokenExpiredError") {
-      res.status(403).json({
+      res.status(401).json({
         message: "Token expirado",
         error: "El token ha expirado, por favor inicia sesión nuevamente",
       });
@@ -79,17 +79,18 @@ export const authenticateToken = (
     }
 
     if (err.name === "JsonWebTokenError") {
-      res.status(403).json({
+      res.status(401).json({
         message: "Token inválido",
         error: "El formato del token es incorrecto",
       });
       return;
     }
 
-    // Cualquier otro error de verificación
-    res.status(403).json({
+    // Cualquier otro error
+    res.status(401).json({
       message: "Token inválido o expirado",
       error: err.message,
     });
+
   }
 };

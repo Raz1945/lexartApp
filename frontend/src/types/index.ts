@@ -35,8 +35,16 @@ export interface Product {
 }
 
 // === CONTEXTO DE AUTENTICACIÓN ===
+export interface Usuario {
+  id: number;
+  nombre: string;
+  email: string;
+}
+
 export interface AuthContextType {
-  token: string | null;
-  setToken: (token: string | null) => void;
-  logout: () => void;
+  isAuth: boolean;
+  usuario: Usuario | null;
+  setToken: (token: string, usuario: Usuario) => void;
+  clear: () => void;
+  loading: boolean; 
 }

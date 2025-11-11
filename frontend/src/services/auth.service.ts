@@ -12,13 +12,11 @@ export async function login(email: string, password: string) {
 
 export async function register(nombre: string, email: string, password: string) {
   const payload: RegisterPayload = { nombre, email, password };
-  const { data } = await api.post("/auth/register", payload);
-
+  const { data } = await api.post<LoginResponse>("/auth/register", payload);
   localStorage.setItem("authToken", data.token);
-  localStorage.setItem("usuario", JSON.stringify(data.usuario));
-
-  return data;
+  return data; 
 }
+
 
 export function logout() {
   localStorage.removeItem("authToken");

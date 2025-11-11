@@ -1,9 +1,21 @@
 import type { ReactNode } from "react";
 import { Navigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import LoadingScreen from "../components/LoadingScreen";
 
-// Verifica la autenticación del usuario
 export function ProtectedRoute({ children }: { children: ReactNode }) {
-  const token = typeof window !== "undefined" ? localStorage.getItem("authToken") : null;
-  if (!token) return <Navigate to="/login" replace />;
+  const { isAuth, loading } = useAuth();
+
+  // Mientras verifica la sesión persistente
+  if (loading) {
+    return <LoadingScreen />;
+  }
+
+  // Si no hay sesión activa → redirige a login
+  if (!isAuth) {
+    return <Navigate to="/login" replace />;
+  }
+
+  // Usuario autenticado → renderiza la página protegida
   return <>{children}</>;
 }
